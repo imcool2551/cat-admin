@@ -1,0 +1,29 @@
+.unauthorized-container {
+    display: flex;
+    justify-content: center;
+}
+.unauthorized-text {
+    font-family: 'Nanum Pen Script', cursive;
+    text-align: center;
+}
+.unauthorized-button-line {
+    display: flex;
+    justify-content: center;
+}
+
+.unauthorized-button {
+    padding: 15px 25px;
+    border-radius: 100%;
+    border: 2px solid #777;
+    background-color: #0E1E3D;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+
+}
+.unauthorized-button:hover {opacity: 0.8;}
+
+.unauthorized-button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

@@ -1,0 +1,29 @@
+.nomatch-container {
+    display: flex;
+    justify-content: center;
+}
+.nomatch-text {
+    font-family: 'Nanum Pen Script', cursive;
+    text-align: center;
+}
+.nomatch-button-line {
+    display: flex;
+    justify-content: center;
+}
+
+.nomatch-button {
+    padding: 15px 25px;
+    border-radius: 100%;
+    border: 2px solid #777;
+    background-color: #0E1E3D;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+
+}
+.nomatch-button:hover {opacity: 0.8;}
+
+.nomatch-button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

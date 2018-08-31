@@ -1,0 +1,9 @@
+.user-title {
+    text-align: center;
+    font-family: 'Nanum Pen Script', cursive;
+    margin-bottom: 5%;
+}
+.user-pagination {
+    display: flex;
+    justify-content: center;
+}

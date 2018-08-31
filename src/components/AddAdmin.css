@@ -1,0 +1,42 @@
+.addadmin-container {
+    display: flex;
+    justify-content: center;
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 1.8em;
+}
+
+.addadmin-form {
+    margin-top: 30%;
+    text-align: center;
+}
+
+.addadmin-username, .addadmin-id {
+    width: 110%;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+.addadmin-password {
+    width: 110%;
+    border-radius: 10px;
+}
+.addadmin-master {
+    margin: 30px 0 0 0;
+}
+.addadmin-statusText {
+    height: 10px;
+}
+.addadmin-submit {
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 15px 45px;
+    border: 2px solid #777;
+    background-color: #0E1E3D;
+    color: #fff;
+
+}
+.addadmin-submit:hover {opacity: 0.8;}
+
+.addadmin-submit:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
