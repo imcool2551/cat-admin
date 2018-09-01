@@ -7,7 +7,7 @@ class UserRow extends Component {
         return(
             <tr>
                 <td>{this.props.userId}</td>
-                <td>닉네임</td>
+                <td>{this.props.nickname}</td>
                 <td>{this.props.catImage}</td>
                 <td>{this.props._enterCount}</td>
                 <td>{this.props._hittenCount}</td>
@@ -43,6 +43,7 @@ class UserTable extends Component {
                                 key={user._id}
                                 userId={user.userId}
                                 catImage={user.catImage}
+                                nickname={user.nickname}
                                 _enterCount={user._enterCount}
                                 _hittenCount={user._hittenCount}
                                 _muteCount={user._muteCount}

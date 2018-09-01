@@ -32,8 +32,8 @@ class CustomNavbar extends Component {
                             </MenuItem>
                         </NavDropdown>
 
-                        <NavItem eventKey={3} componentClass={Link} href="/ads" to="/ads">
-                            광고 관리
+                        <NavItem eventKey={3} componentClass={Link} href="/requests" to="/requests">
+                            요청 관리
                         </NavItem>
 
                         <NavDropdown eventKey={4} title="집사 관리" id="basic-nav-dropdown">

@@ -15,6 +15,10 @@ class Welcome extends Component {
                                     <h3>반갑다옹 {this.props.username} 집사</h3>                                   
                                 </Carousel.Item>
                                 <Carousel.Item>
+                                    <img width={320} height={320} alt="320x320" src="/assets/cat1.png" />
+                                    <h3>1번냥이</h3>
+                                </Carousel.Item>
+                                <Carousel.Item>
                                     <img width={320} height={320} alt="320x320" src="/assets/cat2.png" />
                                     <h3>2번냥이</h3>
                                 </Carousel.Item>
