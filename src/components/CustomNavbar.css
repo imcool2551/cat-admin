@@ -1,15 +1,19 @@
-.nav-header { 
-    margin: 5px 50px 0px 5px;
-    padding: 2px 0 0 0;
+.nav-header {
+  margin: 5px 50px 0px 5px;
+  padding: 2px 0 0 0;
+  font-family: "Spoqa Han Sans", "Sans-serif";
 }
 .menus li {
-    margin-right: 30px;
+  margin-right: 30px;
+  font-family: "Spoqa Han Sans", "Sans-serif";
 }
 .menus li:last-child {
-    margin-right: 0px;
+  margin-right: 0px;
+  font-family: "Spoqa Han Sans", "Sans-serif";
 }
-.navbar-brand>img {
-    width: 40px;
-    height: 40px;
-    display: inline-block;
+.navbar-brand > img {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  font-family: "Spoqa Han Sans", "Sans-serif";
 }
