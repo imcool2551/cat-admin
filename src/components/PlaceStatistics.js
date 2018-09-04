@@ -8,7 +8,7 @@ import './PlaceStatistics.css'
 class PlaceStatistics extends Component {
     state = {
         data: [
-            // {name: '서울', cnt: 40},
+           
         ]
     }
     
@@ -30,7 +30,7 @@ class PlaceStatistics extends Component {
         let response = 
         await axios(
                     { method: 'GET',
-                      url: 'http://localhost:8080/api/admin/locationStats',
+                      url: 'http://localhost:8080/admin/locationStats',
                       headers: {Authorization: 'Bearer ' + localStorage.token}
                     }
               )
