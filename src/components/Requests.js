@@ -55,7 +55,6 @@ class Requests extends Component {
           headers: { Authorization: "Bearer " + localStorage.token }
         })
           .then(response => {
-            console.log(response.data);
             if (response.data.message === "Unauthorized") {
               self.setState({
                 isAuthorized: false
@@ -119,12 +118,10 @@ class Requests extends Component {
   }
 
   _getMessages = () => {
-    console.log("get messages");
     axios.get("https://catadmin.gq/admin/messages").then(response => {
       this.setState({
         requests: response.data
       });
-      console.log(this.state.requests, "this is requests");
     });
   };
 }

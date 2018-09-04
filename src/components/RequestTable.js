@@ -49,10 +49,6 @@ class RequestRow extends Component {
               답 장 하 기
             </Button>
           )}
-
-          <Button bsStyle="danger" bsSize="sm">
-            삭 제
-          </Button>
         </td>
       </tr>
     );
@@ -65,9 +61,17 @@ class RequestTable extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.requests, "this is something");
+    const replied = [];
+    const notreplied = [];
     if (nextProps.requests) {
-      return { requests: nextProps.requests };
+      nextProps.requests.forEach(item => {
+        if (item.isReplied) {
+          replied.push(item);
+        } else {
+          notreplied.push(item);
+        }
+      });
+      return { requests: notreplied.concat(replied) };
     }
     return null;
   }
