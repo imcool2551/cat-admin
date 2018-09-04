@@ -1,18 +1,61 @@
-h3 {
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 3.5em;
-    color: rgb(65, 60, 83);
+.homeSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 15px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-bottom: 30px;
+  background-color: #f4da6c;
+  border-radius: 30px;
+  font-family: "Spoqa Han Sans", "Sans-serif";
 }
-
-.carousel-inner {
-    background-color: rgb(77, 77, 77, 0.2);
-    height: 460px;
+.issuboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
 }
-
-.carousel-inner>.active, .carousel-inner>.next, .carousel-inner>.prev {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
 }
-
+.noticeBoard {
+  margin-top: 15px;
+  background-color: #fcfcfc;
+  font-family: "Spoqa Han Sans", "Sans-serif";
+  border-radius: 30px;
+  padding: 10px;
+}
+.boardInput {
+  width: 500px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.notice-submit {
+  margin-left: 5px;
+  border-radius: 10px;
+  padding: 1px 7px;
+  border: 2px solid #777;
+  background-color: #0e1e3d;
+  color: #fff;
+}
+.notice-input {
+  border-radius: 10px;
+  padding: 1px 7px;
+}
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+}
+@media screen and (max-width: 600px) {
+  .submit-container {
+    width: 300px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
