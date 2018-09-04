@@ -13,42 +13,35 @@ import {
   Legend
 } from "recharts";
 import axios from "axios";
-import SocketIOClient from "socket.io-client";
 import "./UserStatistics.css";
-
-const cumulativeAccessData = [
-  { name: "Mon", day: 800 },
-  { name: "Tue", day: 967 },
-  { name: "Wed", day: 1098 },
-  { name: "Thu", day: 1200 },
-  { name: "Fri", day: 1108 },
-  { name: "Sat", day: 680 },
-  { name: "Sun", day: 680 }
-];
-const resigerData = [
-  { name: "Mon", sum: 4000, day: 2400 },
-  { name: "Tue", sum: 3000, day: 1398 },
-  { name: "Wed", sum: 2000, day: 9800 },
-  { name: "Thu", sum: 2780, day: 3908 },
-  { name: "Fri", sum: 1890, day: 4800 },
-  { name: "Sat", sum: 2390, day: 3800 },
-  { name: "Sun", sum: 3490, day: 4300 }
-];
 
 class UserStatistics extends Component {
   constructor(props) {
     super(props);
-    // 접속정보 받아오는 용도
-    // this._socket = SocketIOClient("http://catadmin.gq", {
-    //   query: this.props.token
-    // });
-
     this.state = {
-      currentAccess: 100,
-      cumulativeDay: 234,
-      cumulativeWeek: 1203,
+      currentRegist: 0,
+      cumulativeDay: 0,
+      cumulativeWeek: 0,
       isAuthorized: true,
-      windowWidth: 1000
+      windowWidth: 1000,
+      cumulativeAccessData: [
+        { name: "Mon", day: 0 },
+        { name: "Tue", day: 0 },
+        { name: "Wed", day: 0 },
+        { name: "Thu", day: 0 },
+        { name: "Fri", day: 0 },
+        { name: "Sat", day: 0 },
+        { name: "Sun", day: 0 }
+      ],
+      resigerData: [
+        { name: "Mon", sum: 0, day: 0 },
+        { name: "Tue", sum: 0, day: 0 },
+        { name: "Wed", sum: 0, day: 0 },
+        { name: "Thu", sum: 0, day: 0 },
+        { name: "Fri", sum: 0, day: 0 },
+        { name: "Sat", sum: 0, day: 0 },
+        { name: "Sun", sum: 0, day: 0 }
+      ]
     };
   }
 
@@ -79,9 +72,40 @@ class UserStatistics extends Component {
       windowWidth: window.innerWidth - 200
     });
   };
+  _getAccessData = () => {
+    const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const today = week[new Date().getDay()];
+    axios.get("https://catadmin.gq/admin/connectStats").then(response => {
+      const data = response.data;
+      let cumulativeWeek = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].name === today) {
+          this.setState({
+            cumulativeDay: data[i].day
+          });
+        }
+        cumulativeWeek = cumulativeWeek + data[i].day;
+      }
+      this.setState({
+        cumulativeWeek,
+        cumulativeAccessData: data
+      });
+    });
+  };
+  _getRegistData = () => {
+    axios.get("https://catadmin.gq/admin/registerStats").then(response => {
+      const data = response.data;
+      this.setState({
+        currentRegist: data[data.length - 1].sum,
+        resigerData: data
+      });
+    });
+  };
 
   async componentDidMount() {
     await this._checkLogin();
+    await this._getAccessData();
+    await this._getRegistData();
     await window.addEventListener("resize", this._sizeDetector);
   }
 
@@ -90,11 +114,13 @@ class UserStatistics extends Component {
   }
   render() {
     const {
-      currentAccess,
+      currentRegist,
       cumulativeDay,
       cumulativeWeek,
       isAuthorized,
-      windowWidth
+      windowWidth,
+      resigerData,
+      cumulativeAccessData
     } = this.state;
     return (
       <div>
@@ -110,15 +136,9 @@ class UserStatistics extends Component {
                 <Col xs={2} />
                 <Col xs={8}>
                   <div className="summary">
-                    <div className="currentAccess">
-                      현재 접속자 : {currentAccess}
-                    </div>
-                    <div className="cumulativeDay">
-                      금일 누적 접속 : {cumulativeDay}
-                    </div>
-                    <div className="cumulativeWeek">
-                      금주 누적 접속 : {cumulativeWeek}
-                    </div>
+                    <div className="currentAccess">누적 가입자 : {currentRegist}</div>
+                    <div className="cumulativeDay">금일 누적 접속 : {cumulativeDay}</div>
+                    <div className="cumulativeWeek">금주 누적 접속 : {cumulativeWeek}</div>
                   </div>
                 </Col>
                 <Col xs={2} />
