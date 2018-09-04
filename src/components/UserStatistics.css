@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+}
+.summary {
+  display: flex;
+  height: 65px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 40px;
+  border: solid 3px;
+  border-color: #f4da6c;
+  border-radius: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 15px;
+}
+@media screen and (max-width: 600px) {
+  .summary {
+    font-size: 11px;
+    height: 43px;
+    border: solid 2px;
+    border-color: #f4da6c;
+  }
+}
+.charts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-around;
+  margin-top: 15px;
+}
+.cumulativeAccessChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
+.registerChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 20px;
+  padding-bottom: 10px;
+}
