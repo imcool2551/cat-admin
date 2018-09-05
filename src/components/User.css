@@ -1,9 +1,36 @@
 .user-title {
     text-align: center;
     font-family: 'Nanum Pen Script', cursive;
-    margin-bottom: 5%;
+}
+.user-input {
+  border-radius: 10px;
+}
+.user-search {
+    border-radius: 10px;
+    margin: 5%;
 }
 .user-pagination {
     display: flex;
     justify-content: center;
 }
+.user-btngroup {
+    display: flex;
+    justify-content: center;
+}
+.user-filter {
+  margin: 1% 2% 2% 0;
+  border-radius: 10px;
+  padding: 1px 7px;
+  border: 2px solid #777;
+  background-color: #0e1e3d;
+  color: #fff;
+}
+.user-filter-clicked {
+    margin: 1% 2% 2% 0;
+    border-radius: 10px;
+    padding: 1px 7px;
+    border: 2px solid #777;
+    background-color: #fff;
+    color: #868A96;
+}
+

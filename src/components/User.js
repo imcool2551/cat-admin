@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Button } from 'react-bootstrap'
 import UserTable from './UserTable'
 import axios from 'axios'
 import ReactPaginate from 'react-paginate'
@@ -12,14 +12,71 @@ class User extends Component {
         this.state = {
             isAuthorized: true,
             users: [],
-            pageCount: 2
+            pageCount: 2,
+            currentPage: 0,
+            filter: 'default',
+            search: ''
         }
     }
-    handlePageClick = (data) => {
-        console.log(data.selected + 1)
+    handleChange= (e) => {
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleSearch = (data) => {
         axios({
             method: 'GET',
-            url: `http://localhost:8080/api/users/${data.selected+1}`,
+            url: `https://catadmin.gq/admin/user/${data}`,
+            headers: {Authorization: 'Bearer ' + localStorage.token}
+        })
+        .then((response) => {
+            console.log(response.data)
+            this.setState({
+                users: [response.data]
+            })
+            this.formRef.reset()
+            this.searchInputRef.focus()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+    handleEdit = (data) => {
+        console.log(data)
+        console.log(this.state.currentPage)
+    }
+ 
+    handleDelete = (data) => {
+        console.log(data)
+    }
+    handleFilter = (filter) => {
+        this.setState({
+            filter: filter
+        })
+        axios({
+            method: 'GET',
+            url: `https://catadmin.gq/api/users/${this.state.currentPage}/${filter}`,
+            headers: {Authorization: 'Bearer ' + localStorage.token}
+        })
+        .then((response) => {
+            console.log(response.data)
+            this.setState({
+                users: response.data.users
+            })
+            this.searchInputRef.focus()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+    handlePageClick = (data) => {
+        this.setState({
+            currentPage: data.selected
+        })
+        axios({
+            method: 'GET',
+            url: `https://catadmin.gq/api/users/${data.selected}/${this.state.filter}`,
             headers: {Authorization: 'Bearer ' + localStorage.token}
         })
         .then((response) => {
@@ -38,7 +95,7 @@ class User extends Component {
             (function() {
                 axios({
                     method: 'GET',
-                    url: 'http://localhost:8080/api/users/1',
+                    url: 'https://catadmin.gq/api/users/0/default',
                     headers: {Authorization: 'Bearer ' + localStorage.token}
                 })
                 .then((response) => {
@@ -52,6 +109,7 @@ class User extends Component {
                             pageCount: Math.ceil(response.data.totalNums / 10),
                             users: response.data.users
                         })
+                        self.searchInputRef.focus()
                     }
                 })
                 .catch((err) => {
@@ -65,20 +123,52 @@ class User extends Component {
         }
     }
     render() {
-        let { isAuthorized, pageCount, users } = this.state
+        let { isAuthorized, pageCount, users, filter, search } = this.state
         return (
             <div>
                 { isAuthorized ? (
                 <div>
                     <Grid>
-                    <Row className="show-grid">
+                        <Row className="show-grid">
                             <Col xs={12} className="user-title">
                                 <h1>고양이들을 잘 부탁한다옹!</h1>
                             </Col>
                         </Row>
                         <Row className="show-grid">
                             <Col xs={12}>
-                                <UserTable users={users} />
+                                <form ref={ref => this.formRef=ref}>
+                                    <input type="text" ref={ref => this.searchInputRef=ref} name="search" className="user-input" placeholder="냥이 번호를 입력하라옹" onChange={this.handleChange} />
+                                    <Button className="user-search" onClick={() => {this.handleSearch(search)}}>검색</Button>
+                                </form>
+                            </Col>
+                        </Row>
+                        <Row className="show-grid">
+                            <Col xs={12}className="user-btngroup">
+                                <button 
+                                className=
+                                    {filter === "default" ? "user-filter-clicked" : "user-filter"}
+                                onClick={() => {this.handleFilter('default')}}   
+                                >번호</button>
+                                <button 
+                                className=
+                                    {filter === "_enterCount" ? "user-filter-clicked" : "user-filter"}
+                                onClick={() => {this.handleFilter('_enterCount')}}   
+                                >채팅 횟수</button>
+                                <button 
+                                className=
+                                    {filter === "_hittenCount" ? "user-filter-clicked" : "user-filter"}
+                                onClick={() => {this.handleFilter('_hittenCount')}}   
+                                >맞은 횟수</button>
+                                <button 
+                                className=
+                                    {filter === "_muteCount" ? "user-filter-clicked" : "user-filter"}
+                                onClick={() => {this.handleFilter('_muteCount')}}   
+                                >뮤트된 횟수</button>
+                            </Col>
+                        </Row>
+                        <Row className="show-grid">
+                            <Col xs={12}>
+                                <UserTable users={users} onEdit={this.handleEdit} onDelete={this.handleDelete} />
                             </Col>
                         </Row>
                         <Row className="show-grid">

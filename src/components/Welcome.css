@@ -1,3 +1,9 @@
+.welcome-header {
+  font-family: 'Nanum Pen Script', cursive;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
 .homeSummary {
   display: flex;
   align-items: center;

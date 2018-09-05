@@ -114,6 +114,11 @@ class Welcome extends Component {
       <div>
         <Grid>
           <Row>
+            <Col xs={12} className="welcome-header">
+              <h2>반갑다옹 {this.props.username} 집사</h2>
+            </Col>
+          </Row>
+          <Row>
             <Col xs={12}>
               <div className="homeSummary">
                 <div className="currentAccess">누적 가입자 : {currentRegist}</div>

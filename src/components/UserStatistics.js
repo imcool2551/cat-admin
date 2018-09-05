@@ -50,7 +50,7 @@ class UserStatistics extends Component {
       if (localStorage.token) {
         const response = await axios({
           method: "GET",
-          url: "http://localhost:8080/api/users/1",
+          url: "https://catadmin.gq/api/checkToken",
           headers: { Authorization: "Bearer " + localStorage.token }
         });
         if (response.data.message === "Unauthorized") {

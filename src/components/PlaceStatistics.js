@@ -7,9 +7,8 @@ import './PlaceStatistics.css'
 
 class PlaceStatistics extends Component {
     state = {
-        data: [
-           
-        ]
+        data: [],
+        windowWidth: 1000
     }
     
     initClusterer = async () => {
@@ -30,12 +29,12 @@ class PlaceStatistics extends Component {
         let response = 
         await axios(
                     { method: 'GET',
-                      url: 'http://localhost:8080/admin/locationStats',
+                      url: 'https://catadmin.gq/admin/locationStats',
                       headers: {Authorization: 'Bearer ' + localStorage.token}
                     }
               )
         
-        response.data.filter((p) => {return p.longitude !== 0}).forEach(function(position) {
+        response.data.filter((p) => {return 124 < p.longitude && p.longitude < 132 && 33 < p.latitude && p.latitude < 43}).forEach(function(position) {
            geocoder.coord2RegionCode(position.longitude, position.latitude, function(result, status) {
                if (status === window.daum.maps.services.Status.OK) {
                    console.log(result[0].region_2depth_name)
@@ -58,31 +57,67 @@ class PlaceStatistics extends Component {
         })
         clusterer.addMarkers(markers)
     }
-    componentDidMount() {
-        this.initClusterer()
-                             
+
+    _sizeDetector = () => {
+        this.setState({
+            windowWidth: window.innerWidth - 200
+        });
+    };
+
+   async componentDidMount() {
+        try {
+            if (localStorage.token) {
+                let response = await axios({
+                    method: 'GET',
+                    url: 'https://catadmin.gq/api/checkToken',
+                    headers: {Authorization: 'Bearer ' + localStorage.token}
+                })
+                console.log(response.data)
+                if (response.data.message === 'Unauthorized') {
+                    this.props.history.push('/unauthorized')
+                } else {
+                    this.initClusterer()
+                    await window.addEventListener("resize", this._sizeDetector);                     
+                }
+            } else {
+                this.props.history.push('/unauthorized')
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this._sizeDetector);
+    }
+
     render() {
-        let {data} = this.state
+        let { data } = this.state
         return (
-            <Grid>
-                <Row className="show-grid">
-                    <Col xs={12} id="ps-map">
-                    </Col>
-                </Row>
-                <Row className="show-grid">
-                <Col xs={12}>
-                    <BarChart width={730} height={250} data={data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="cnt" fill="#8884d8" />
-                    </BarChart>
-                </Col>
-                </Row>
-            </Grid>
+                <Grid>
+                    <Row className="show-grid">
+                        <Col xs={12}>
+                            <h1 className="ps-header">냥이들 위치라옹~</h1>
+                        </Col>
+                    </Row>
+                    <Row className="show-grid">
+                        <Col xs={12} id="ps-map">
+                        </Col>
+                    </Row>
+                    <Row className="show-grid">
+                        <Col xs={12} className="ps-graph">
+                            <BarChart width={730} height={250} data={data}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="cnt" fill="#8884d8" />
+                            </BarChart>
+                        </Col>
+                    </Row>
+                </Grid> 
+
         );
     }
 }

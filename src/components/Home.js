@@ -27,7 +27,7 @@ class Home extends Component {
         try {
             let response = await axios({
                 method: 'POST',
-                url: 'http://localhost:8080/api/login',
+                url: 'https://catadmin.gq/api/login',
                 data: {userId, password}
             })
             console.log(response.data)
@@ -59,17 +59,17 @@ class Home extends Component {
         if (localStorage.token) {
             (function() {
                 axios({
-                    method: 'POST',
-                    url: 'http://localhost:8080/api/login',
+                    method: 'GET',
+                    url: 'https://catadmin.gq/api/checkToken',
                     headers: {Authorization: 'Bearer ' + localStorage.token}
                 })
                 .then((response) => {
                     console.log(response.data)
-                    if (response.data.message !== 'Authorized') {
+                    if (response.data.message === 'Unauthorized') {
                         self.setState({
                             isAuthorized: false,
                         }, () => {self.idRef.focus()})
-                    } else if (response.data.message === 'Authorized') {
+                    } else {
                         self.setState({
                             username: response.data.username
                         })

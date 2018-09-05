@@ -1,8 +1,17 @@
 .row {
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 #ps-map {
     width: 80%;
+    height: 500px;
+}
+.ps-graph {
+    width: 80%;
     height: 400px;
+}
+.ps-header {
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 3em;
 }

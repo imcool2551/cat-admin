@@ -45,13 +45,12 @@ class Requests extends Component {
   }
 
   componentDidMount() {
-    this._getMessages();
     let self = this;
     if (localStorage.token) {
       (function() {
         axios({
           method: "GET",
-          url: "http://localhost:8080/api/users/1",
+          url: "https://catadmin.gq/api/checkToken",
           headers: { Authorization: "Bearer " + localStorage.token }
         })
           .then(response => {
@@ -60,10 +59,7 @@ class Requests extends Component {
                 isAuthorized: false
               });
             } else {
-              self.setState({
-                pageCount: Math.ceil(response.data.totalNums / 10),
-                requests: response.data.requests
-              });
+              self._getMessages();
             }
           })
           .catch(err => {

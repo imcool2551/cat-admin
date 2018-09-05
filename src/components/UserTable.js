@@ -13,8 +13,8 @@ class UserRow extends Component {
                 <td>{this.props._hittenCount}</td>
                 <td>{this.props._muteCount}</td>
                 <td>
-                    <Button bsStyle="primary" bsSize="xsmall" className="usertable-edit">수정</Button>
-                    <Button bsStyle="danger" bsSize="xsmall">제거</Button>
+                    <Button bsStyle="primary" bsSize="xsmall" onClick={() => {this.props.onEdit(this.props.userId)}} className="usertable-edit" >수정</Button>
+                    <Button bsStyle="danger" bsSize="xsmall" onClick={() => {this.props.onDelete(this.props.userId)}}>제거</Button>
                 </td>
             </tr>
         )
@@ -47,6 +47,8 @@ class UserTable extends Component {
                                 _enterCount={user._enterCount}
                                 _hittenCount={user._hittenCount}
                                 _muteCount={user._muteCount}
+                                onDelete={this.props.onDelete}
+                                onEdit={this.props.onEdit}
                             />
                         )
                     })}

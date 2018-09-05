@@ -45,7 +45,7 @@ class AddAdmin extends Component {
         try {
             var response = await axios({
                 method: 'POST', 
-                url: 'http://localhost:8080/api/signup', 
+                url: 'https://catadmin.gq/api/signup', 
                 headers: {authorization: 'Bearer ' + localStorage.token},
                 data: {username, userId, password, isMaster}
             })
@@ -92,13 +92,13 @@ class AddAdmin extends Component {
         if (localStorage.token) {
             (function() {
                 axios({
-                    method: 'POST',
-                    url: 'http://localhost:8080/api/signup',
+                    method: 'GET',
+                    url: 'https://catadmin.gq/api/checkToken',
                     headers: {Authorization: 'Bearer ' + localStorage.token}
                 })
                 .then((response) => {
                     console.log(response.data)
-                    if (response.data.message === 'Unauthorized') {
+                    if (response.data.message !== 'master authorized') {
                         self.setState({
                             isAuthorized: false,
                         })
