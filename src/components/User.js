@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import UserTable from './UserTable'
+import UserEditModal from './UserEditModal'
+import UserDeleteModal from './UserDeleteModal'
 import axios from 'axios'
 import ReactPaginate from 'react-paginate'
 import './User.css'
@@ -15,7 +17,11 @@ class User extends Component {
             pageCount: 2,
             currentPage: 0,
             filter: 'default',
-            search: ''
+            search: '',
+            showDeleteModal: false,
+            showEditModal: false,
+            userId: '',
+            nickname: ''
         }
     }
     handleChange= (e) => {
@@ -31,10 +37,13 @@ class User extends Component {
             headers: {Authorization: 'Bearer ' + localStorage.token}
         })
         .then((response) => {
-            console.log(response.data)
-            this.setState({
-                users: [response.data]
-            })
+            if (response.data.user) {
+                this.setState({
+                    users: [response.data.user]
+                })
+            } else {
+                window.alert('냥이를 못찾았다옹')
+            }
             this.formRef.reset()
             this.searchInputRef.focus()
         })
@@ -42,14 +51,99 @@ class User extends Component {
             console.log(err)
         })
     }
-    handleEdit = (data) => {
-        console.log(data)
-        console.log(this.state.currentPage)
+
+    showModal = (modal, userId, nickname) => {
+        if (modal === 'delete') {
+            this.setState({
+                showDeleteModal: true,
+                userId: userId
+            })
+        } else if (modal === 'edit') {
+            this.setState({
+                showEditModal: true,
+                userId: userId,
+                nickname: nickname
+            })
+        }
+    }
+    hideModal = (modal) => {
+        if (modal === 'delete') {
+            this.setState({
+                showDeleteModal: false
+            })
+        }
+        if (modal === 'edit') {
+            this.setState({
+                showEditModal: false
+            })
+        }
+    }
+    
+    handleEdit = async (data) => {
+        await axios({
+            method: 'PUT',
+            url: `https://catadmin.gq/admin/user/${this.state.userId}`,
+            headers: {Authorization: 'Bearer ' + localStorage.token},
+            data: {nickname: data}
+        })
+        .then((response) => {
+            this.hideModal('edit')
+            console.log(response.data)
+            axios({
+                method: 'GET',
+                url: `https://catadmin.gq/api/users/${this.state.currentPage}/${this.state.filter}`,
+                headers: {Authorization: 'Bearer ' + localStorage.token}
+            })
+            .then((response) => {
+                console.log(response.data)
+                this.setState({
+                    users: response.data.users,
+                    nickname: ''
+                })
+                this.searchInputRef.focus()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
  
-    handleDelete = (data) => {
-        console.log(data)
+    handleDelete = async () => {
+        await axios({
+            method: 'DELETE',
+            url: `https://catadmin.gq/admin/user/${this.state.userId}`,
+            headers: {Authorization: 'Bearer ' + localStorage.token}
+        })
+        .then((response) => {
+            console.log(response + '가 삭제되었소')
+            
+            this.hideModal('delete')
+            axios({
+                method: 'GET',
+                url: `https://catadmin.gq/api/users/${this.state.currentPage}/${this.state.filter}`,
+                headers: {Authorization: 'Bearer ' + localStorage.token}
+            })
+            .then((response) => {
+                console.log(response.data)
+                this.setState({
+                    users: response.data.users
+                })
+                this.searchInputRef.focus()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
+    
+
+
     handleFilter = (filter) => {
         this.setState({
             filter: filter
@@ -123,11 +217,13 @@ class User extends Component {
         }
     }
     render() {
-        let { isAuthorized, pageCount, users, filter, search } = this.state
+        let { isAuthorized, pageCount, users, filter, search, showDeleteModal, showEditModal, userId, nickname } = this.state
         return (
             <div>
                 { isAuthorized ? (
                 <div>
+                    <UserEditModal nickname={nickname} userId={userId} show={showEditModal} onHide={this.hideModal} onEdit={this.handleEdit} />
+                    <UserDeleteModal userId={userId} show={showDeleteModal} onHide={this.hideModal} onDelete={this.handleDelete} />
                     <Grid>
                         <Row className="show-grid">
                             <Col xs={12} className="user-title">
@@ -168,7 +264,7 @@ class User extends Component {
                         </Row>
                         <Row className="show-grid">
                             <Col xs={12}>
-                                <UserTable users={users} onEdit={this.handleEdit} onDelete={this.handleDelete} />
+                                <UserTable users={users} onEditClick={this.showModal} onDeleteClick={this.showModal} />
                             </Col>
                         </Row>
                         <Row className="show-grid">

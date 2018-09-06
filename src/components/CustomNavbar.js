@@ -64,7 +64,7 @@ class CustomNavbar extends Component {
                 href="/admin"
                 to="/admin"
               >
-                집사 관리하기
+                집사 관리하기(예정)
               </MenuItem>
               <MenuItem
                 eventKey={4.2}
