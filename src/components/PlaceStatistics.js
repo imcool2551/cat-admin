@@ -33,20 +33,24 @@ class PlaceStatistics extends Component {
                       headers: {Authorization: 'Bearer ' + localStorage.token}
                     }
               )
-        
-        response.data.filter((p) => {return 124 < p.longitude && p.longitude < 132 && 33 < p.latitude && p.latitude < 43}).forEach(function(position) {
-           geocoder.coord2RegionCode(position.longitude, position.latitude, function(result, status) {
-               if (status === window.daum.maps.services.Status.OK) {
-                   console.log(result[0].region_2depth_name)
-                   let i = self.state.data.map((e) => e.name).indexOf(result[0].region_2depth_name)
-                   i !== -1 ? 
-                   (function(){
-                      self.setState({
-                        data: update(self.state.data, {[i] : {cnt: {$apply: function(x){return x + 1}}}})
-                      })
-                    })()
-                   : self.setState({data: [...self.state.data, { name: result[0].region_2depth_name, cnt: 1 }]})
-               }
+        console.log(response.data)
+        response.data.filter((p) => {
+            return 124 < p.longitude && p.longitude < 132 && 
+            33 < p.latitude && p.latitude < 43 && 
+            new Date().getTime() - new Date(p.createdAt).getTime() < 86400000 && 
+            new Date().getDate() === new Date(p.createdAt).getDate()})
+            .forEach(function(position) {
+               geocoder.coord2RegionCode(position.longitude, position.latitude, function(result, status) {
+                if (status === window.daum.maps.services.Status.OK) {
+                    let i = self.state.data.map((e) => e.name).indexOf(result[0].region_2depth_name)
+                    i !== -1 ? 
+                    (function(){
+                        self.setState({
+                            data: update(self.state.data, {[i] : {입장수: {$apply: function(x){return x + 1}}}})
+                        })
+                        })()
+                    : self.setState({data: [...self.state.data, { name: result[0].region_2depth_name, 입장수: 1 }]})
+                }
            })
         })
         
@@ -112,7 +116,7 @@ class PlaceStatistics extends Component {
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <Bar dataKey="cnt" fill="#8884d8" />
+                                <Bar dataKey="입장수" fill="#8884d8" />
                             </BarChart>
                         </Col>
                     </Row>

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbar from './components/CustomNavbar'
 import Home from './components/Home'
 import User from './components/User'
+import AddCat from './components/AddCat'
 import UserStatistics from './components/UserStatistics'
 import PlaceStatistics from './components/PlaceStatistics'
 import Requests from './components/Requests'
@@ -24,6 +25,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/user" component={User} />
+                    <Route path="/add_cat" component={AddCat} />
                     <Route path="/statistics/user" component={UserStatistics} />
                     <Route path="/statistics/place" component={PlaceStatistics} />
                     <Route path="/requests" component={Requests} />

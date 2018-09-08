@@ -1,0 +1,19 @@
+.addcat-header {
+    font-family: 'Nanum Pen Script', cursive;
+    margin-bottom: 10%;
+}
+.addcat-input-noun, .addcat-input-adj  {
+    border-radius: 10px;
+    margin-right: 3%;
+}
+.addcat-button-noun, .addcat-button-adj {
+    margin: 1% 2% 2% 0;
+    border-radius: 10px;
+    padding: 1px 7px;
+    border: 2px solid #777;
+    background-color: #0e1e3d;
+    color: #fff;
+}
+form {
+    display: inline;
+}

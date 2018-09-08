@@ -37,9 +37,10 @@ class User extends Component {
             headers: {Authorization: 'Bearer ' + localStorage.token}
         })
         .then((response) => {
-            if (response.data.user) {
+            console.log(response)
+            if (response.data.user.length > 0) {
                 this.setState({
-                    users: [response.data.user]
+                    users: response.data.user
                 })
             } else {
                 window.alert('냥이를 못찾았다옹')

@@ -25,9 +25,24 @@ class CustomNavbar extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav className="menus">
-            <NavItem eventKey={1} componentClass={Link} href="/user" to="/user">
-              고양이 정보
-            </NavItem>
+            <NavDropdown eventKey={1} title="고양이 관리" id="basic-nav-dropdown">
+              <MenuItem
+                eventKey={1.1}
+                componentClass={Link}
+                href="/user"
+                to="/user"
+              >
+              고양이 관리
+              </MenuItem>
+              <MenuItem
+                eventKey={1.2}
+                componentClass={Link}
+                href="/add_cat"
+                to="/add_cat"
+              >
+              고양이 추가
+              </MenuItem>
+            </NavDropdown>
 
             <NavDropdown eventKey={2} title="통계 보기" id="basic-nav-dropdown">
               <MenuItem
@@ -64,7 +79,7 @@ class CustomNavbar extends Component {
                 href="/admin"
                 to="/admin"
               >
-                집사 관리하기(예정)
+                집사 관리하기
               </MenuItem>
               <MenuItem
                 eventKey={4.2}
