@@ -92,7 +92,7 @@ class AddCat extends Component {
                     } else {
                         axios({
                             method: "GET",
-                            url: "https:/catadmin.gq/admin/nick/name",
+                            url: "https://catadmin.gq/admin/nick/name",
                             headers: {Authorization: "Bearer " + localStorage.token}
                         })
                         .then((response) => {
@@ -103,7 +103,7 @@ class AddCat extends Component {
                         })
                         axios({
                             method: "GET",
-                            url: "https:/catadmin.gq/admin/nick/noun",
+                            url: "https://catadmin.gq/admin/nick/noun",
                             headers: {Authorization: "Bearer " + localStorage.token}
                         })
                         .then((response) => {
@@ -114,7 +114,7 @@ class AddCat extends Component {
                         })
                         axios({
                             method: "GET",
-                            url: "https:/catadmin.gq/admin/nick/adj",
+                            url: "https://catadmin.gq/admin/nick/adj",
                             headers: {Authorization: "Bearer " + localStorage.token}
                         })
                         .then((response) => {
